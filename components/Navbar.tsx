@@ -1,32 +1,36 @@
-import { Home, Lightbulb, Users2 } from "lucide-react";
+import { Home, Lightbulb, Presentation, Users2 } from "lucide-react";
 import React from "react";
+import ThemeToggle from "./Themetoggle";
+import Image from "next/image";
 
 const Navbar = () => {
   return (
     <div className="sticky top-0 z-20 w-full">
-      <nav className="bg-white shadow-md dark:bg-black">
+      <nav className="bg-white dark:bg-black">
         <div className="md:mx-10 mx-2 flex flex-wrap items-center justify-between p-2">
           <a
             href="/"
             className="flex items-center space-x-3 text-white rtl:space-x-reverse"
           >
-            {/* <Image
+            <Image
               src="/logo.png"
-              className="rounded-md"
-              height={55}
-              width={55}
+              className="rounded-md "
+              height={25}
+              width={25}
               alt="logo"
-            /> */}
-            <Lightbulb
+            />
+            {/* <Lightbulb
               size={25}
               className="-rotate-6 text-black dark:text-white"
-            />
+            /> */}
+            <div className="py-auto">
             <span
               className="text-[22px] text-black md:text-[24px] dark:text-white"
               style={{ lineHeight: "32px", fontWeight: "600" }}
             >
               Project Cell
             </span>
+            </div>
           </a>
           <div>
             <div className="md:mx-8 bg-white dark:bg-black" id="navbar-default">
@@ -46,6 +50,19 @@ const Navbar = () => {
                   >
                     <Users2 />
                   </a>
+                </li>
+                <li>
+                  <a
+                    href="/team"
+                    className="block rounded py-2 text-black hover:text-black md:border-0 md:p-0 md:hover:bg-transparent dark:text-white dark:hover:text-gray-400"
+                  >
+                    <Presentation />
+                  </a>
+                </li>
+                <li>
+                  <div className="block rounded py-2 text-black hover:text-black md:border-0 md:p-0 md:hover:bg-transparent dark:text-white dark:hover:text-gray-400">
+                    <ThemeToggle />
+                  </div>
                 </li>
                 {/* {userAuth ? (
                   <li className="relative">
