@@ -44,10 +44,10 @@ export function FeaturesSectionDemo() {
     <div className="relative z-20 py-10 lg:py-20 max-w-7xl mx-auto">
       <div className="px-8">
         <p className="text-sm lg:text-2xl max-w-2xl mx-auto text-neutral-500 text-center font-normal dark:text-neutral-300">
-          Welcome to
+          Welcome To
         </p>
         <h4 className="text-3xl font-bold lg:text-7xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight text-black dark:text-white">
-          Project Cell 2024
+          Project Cell CRCE
         </h4>
 
         <p className="text-sm lg:text-base  max-w-2xl  my-4 mx-auto text-neutral-500 text-center font-normal dark:text-neutral-300">
