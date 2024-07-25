@@ -96,7 +96,7 @@ const Navbar = () => {
                 className="text-[22px] text-black md:text-[24px] dark:text-white"
                 style={{ lineHeight: "32px", fontWeight: "600" }}
               >
-                Project Cell
+                Project Cell CRCE
               </span>
             </div>
           </a>
