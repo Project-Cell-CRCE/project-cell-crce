@@ -8,8 +8,8 @@ export default function Home() {
   return (
     <div className="bg-white dark:bg-black min-h-screen">
       <Navbar />
-      <FeaturesSectionDemo/>
-      <HomePage/>
+      <FeaturesSectionDemo />
+      <HomePage />
       <Banner />
     </div>
   );

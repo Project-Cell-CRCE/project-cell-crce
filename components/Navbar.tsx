@@ -1,5 +1,6 @@
-import { Home, Lightbulb, Menu, Presentation, Users2 } from "lucide-react";
-import React from "react";
+"use client";
+import { Menu, Presentation } from "lucide-react";
+import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,6 +17,10 @@ import ThemeToggle from "./Themetoggle";
 import { Button } from "./ui/button";
 
 const Navbar = () => {
+  const [nav, setNav] = useState(false);
+  const handleNav = () => {
+    setNav(!nav);
+  };
   const components: { title: string; href: string; description: string }[] = [
     {
       title: "Event Name",
@@ -72,7 +77,7 @@ const Navbar = () => {
     },
   ];
   return (
-    <div className="sticky top-0 z-[40] w-full">
+    <div className="sticky top-0 z-[45] w-full">
       <nav className="bg-white dark:bg-black">
         <div className="md:mx-10 mx-2 flex flex-wrap items-center justify-between p-2">
           <a
@@ -159,7 +164,7 @@ const Navbar = () => {
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <Link href="/team" legacyBehavior passHref>
+                  <Link href="/#our-team" legacyBehavior passHref>
                     <NavigationMenuLink
                       className={navigationMenuTriggerStyle()}
                     >
@@ -177,7 +182,7 @@ const Navbar = () => {
                   <ThemeToggle />
                 </div>
                 <div className="md:hidden block rounded my-auto text-black hover:text-black md:border-0 md:p-0 md:hover:bg-transparent dark:text-white dark:hover:text-gray-400">
-                  <Menu />
+                  <Menu onClick={handleNav} />
                 </div>
                 <Button className="md:block hidden">Login</Button>
               </div>
@@ -216,6 +221,60 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
+      {nav ? (
+        // <!-- drawer component -->
+        <div
+          //   id="drawer-navigation"
+          className="fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto transition-transform bg-white w-64 dark:bg-gray-800"
+          style={{ zIndex: "5" }}
+          // tabindex="-1"
+        >
+          <div className="py-4 overflow-y-auto">
+            <ul className="space-y-2 font-medium">
+              <li>
+                <a
+                  href="#home"
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                  onClick={handleNav}
+                >
+                  <span className="ml-3">Home</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/projects"
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                  onClick={handleNav}
+                >
+                  <span className="flex-1 ml-3 whitespace-nowrap">
+                    Projects
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/events"
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                  onClick={handleNav}
+                >
+                  <span className="flex-1 ml-3 whitespace-nowrap">Events</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#team"
+                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                  onClick={handleNav}
+                >
+                  <span className="flex-1 ml-3 whitespace-nowrap">Team</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };
