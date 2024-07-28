@@ -16,6 +16,7 @@ import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { EffectCoverflow, Pagination, Navigation } from "swiper/modules";
+import { CardsCarouselDemo } from "./ui/CardsCarouselDemo";
 
 const HomePage = () => {
   const team = [
@@ -293,7 +294,9 @@ const HomePage = () => {
         </SwiperSlide>
       </Swiper> */}
 
-      <div className="relative grid md:grid-cols-2 gap-3">
+      <CardsCarouselDemo/>
+
+      {/* <div className="relative grid md:grid-cols-2 gap-3">
         <Card className="grid md:grid-cols-2 gap-3">
           <Image
             src="https://images.unsplash.com/photo-1517322048670-4fba75cbbb62?q=80&w=3000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -389,7 +392,7 @@ const HomePage = () => {
             <ChevronRight />
           </Button>
         </div>
-      </div>
+      </div> */}
 
       <p
         id="our-team"
