@@ -10,12 +10,7 @@ import {
 import { Button } from "./ui/button";
 import Image from "next/image";
 import { ChevronRight, Github, Globe, Instagram, Linkedin } from "lucide-react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/effect-coverflow";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import { EffectCoverflow, Pagination, Navigation } from "swiper/modules";
+import { CardsCarouselDemo } from "./ui/CardsCarouselDemo";
 
 const HomePage = () => {
   const team = [
@@ -159,141 +154,12 @@ const HomePage = () => {
         </div>
       </div>
 
-      <p className="text-2xl my-5 font-semibold lg:text-3xl max-w-2xl text-neutral-500 text-start dark:text-neutral-300">
+      <p className="text-2xl mb-2 mt-5 font-semibold lg:text-3xl max-w-2xl text-neutral-500 text-start dark:text-neutral-300">
         Our Events
       </p>
-      {/* <Swiper
-        effect={"coverflow"}
-        grabCursor={true}
-        centeredSlides={true}
-        loop={true}
-        slidesPerView={"auto"}
-        coverflowEffect={{ rotate: 0, stretch: 0, depth: 100, modifier: 2.5 }}
-        modules={[EffectCoverflow, Pagination, Navigation]}
-      >
-        <SwiperSlide>
-          <Card className="grid md:grid-cols-2 gap-3">
-            <Image
-              src="https://images.unsplash.com/photo-1517322048670-4fba75cbbb62?q=80&w=3000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              className="rounded-md p-2 h-full w-full aspect-square"
-              height={100}
-              width={100}
-              alt="logo"
-            />
-            <div>
-              <CardHeader className="border-b">
-                <CardTitle>Project Cell</CardTitle>
-                <CardDescription>
-                  Deploy your new project in one-click. Lorem ipsum dolor sit
-                  amet, consectetur adipisicing elit. Aut voluptatibus labore,
-                  quia aliquam necessitatibus, cum nesciunt provident expedita
-                </CardDescription>
-              </CardHeader>
-              <CardFooter className="mt-3 flex justify-between">
-                <Button>Know More</Button>
-              </CardFooter>
-            </div>
-          </Card>
-        </SwiperSlide>
-        <SwiperSlide>
-          <Card className="grid md:grid-cols-2 gap-3">
-            <Image
-              src="https://images.unsplash.com/photo-1517322048670-4fba75cbbb62?q=80&w=3000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              className="rounded-md p-2 h-full w-full aspect-square"
-              height={100}
-              width={100}
-              alt="logo"
-            />
-            <div>
-              <CardHeader className="border-b">
-                <CardTitle>Project Cell</CardTitle>
-                <CardDescription>
-                  Deploy your new project in one-click. Lorem ipsum dolor sit
-                  amet, consectetur adipisicing elit. Aut voluptatibus labore,
-                  quia aliquam necessitatibus, cum nesciunt provident expedita
-                </CardDescription>
-              </CardHeader>
-              <CardFooter className="mt-3 flex justify-between">
-                <Button>Know More</Button>
-              </CardFooter>
-            </div>
-          </Card>
-        </SwiperSlide>
-        <SwiperSlide>
-          <Card className="grid md:grid-cols-2 gap-3">
-            <Image
-              src="https://images.unsplash.com/photo-1517322048670-4fba75cbbb62?q=80&w=3000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              className="rounded-md p-2 h-full w-full aspect-square"
-              height={100}
-              width={100}
-              alt="logo"
-            />
-            <div>
-              <CardHeader className="border-b">
-                <CardTitle>Project Cell</CardTitle>
-                <CardDescription>
-                  Deploy your new project in one-click. Lorem ipsum dolor sit
-                  amet, consectetur adipisicing elit. Aut voluptatibus labore,
-                  quia aliquam necessitatibus, cum nesciunt provident expedita
-                </CardDescription>
-              </CardHeader>
-              <CardFooter className="mt-3 flex justify-between">
-                <Button>Know More</Button>
-              </CardFooter>
-            </div>
-          </Card>
-        </SwiperSlide>
-        <SwiperSlide>
-          <Card className="grid md:grid-cols-2 gap-3">
-            <Image
-              src="https://images.unsplash.com/photo-1517322048670-4fba75cbbb62?q=80&w=3000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              className="rounded-md p-2 h-full w-full aspect-square"
-              height={100}
-              width={100}
-              alt="logo"
-            />
-            <div>
-              <CardHeader className="border-b">
-                <CardTitle>Project Cell</CardTitle>
-                <CardDescription>
-                  Deploy your new project in one-click. Lorem ipsum dolor sit
-                  amet, consectetur adipisicing elit. Aut voluptatibus labore,
-                  quia aliquam necessitatibus, cum nesciunt provident expedita
-                </CardDescription>
-              </CardHeader>
-              <CardFooter className="mt-3 flex justify-between">
-                <Button>Know More</Button>
-              </CardFooter>
-            </div>
-          </Card>
-        </SwiperSlide>
-        <SwiperSlide>
-          <Card className="grid md:grid-cols-2 gap-3">
-            <Image
-              src="https://images.unsplash.com/photo-1517322048670-4fba75cbbb62?q=80&w=3000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              className="rounded-md p-2 h-full w-full aspect-square"
-              height={100}
-              width={100}
-              alt="logo"
-            />
-            <div>
-              <CardHeader className="border-b">
-                <CardTitle>Project Cell</CardTitle>
-                <CardDescription>
-                  Deploy your new project in one-click. Lorem ipsum dolor sit
-                  amet, consectetur adipisicing elit. Aut voluptatibus labore,
-                  quia aliquam necessitatibus, cum nesciunt provident expedita
-                </CardDescription>
-              </CardHeader>
-              <CardFooter className="mt-3 flex justify-between">
-                <Button>Know More</Button>
-              </CardFooter>
-            </div>
-          </Card>
-        </SwiperSlide>
-      </Swiper> */}
+      <CardsCarouselDemo/>
 
-      <div className="relative grid md:grid-cols-2 gap-3">
+      {/* <div className="relative grid md:grid-cols-2 gap-3">
         <Card className="grid md:grid-cols-2 gap-3">
           <Image
             src="https://images.unsplash.com/photo-1517322048670-4fba75cbbb62?q=80&w=3000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -389,7 +255,7 @@ const HomePage = () => {
             <ChevronRight />
           </Button>
         </div>
-      </div>
+      </div> */}
 
       <p
         id="our-team"

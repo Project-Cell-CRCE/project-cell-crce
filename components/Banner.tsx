@@ -5,7 +5,7 @@ import { Button } from "./ui/button";
 
 const Banner = () => {
   return (
-    <div className="sticky z-[30] bg-yellow-500 bottom-0 w-full text-black">
+    <div className="sticky z-[40] bg-yellow-500 bottom-0 w-full text-black">
       <div className="h-[100px] relative flex flex-row md:gap-36 gap-2 justify-start">
         <div className="md:mx-10 mx-1 my-auto">
           <div className="md:block hidden text-sm">

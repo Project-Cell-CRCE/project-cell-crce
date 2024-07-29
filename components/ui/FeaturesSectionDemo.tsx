@@ -35,7 +35,7 @@ export function FeaturesSectionDemo() {
     {
       title: "Deploy in seconds",
       description:
-        "With our blazing fast, state of the art, cutting edge, we are so back cloud servies (read AWS) - you can deploy your model in seconds.",
+        "See what we build, come with us on our Journey",
       skeleton: <SkeletonFour />,
       className: "col-span-1 lg:col-span-3 border-b lg:border-none",
     },
@@ -231,10 +231,31 @@ export const SkeletonTwo = () => {
 
 export const SkeletonFour = () => {
   return (
-    <div className="h-60 md:h-full  flex flex-col items-center relative bg-transparent dark:bg-transparent mt-10">
+    <>
+    <Link
+      href="https://www.youtube.com/watch?v=RPa3_AD1_Vs"
+      target="__blank"
+      className="relative flex gap-10  h-full group/image"
+    >
+      <div className="w-full  mx-auto bg-transparent dark:bg-transparent group h-full">
+        <div className="flex flex-1 w-full h-full flex-col space-y-2  relative">
+          {/* TODO */}
+          <Youtube className="h-20 w-20 absolute z-10 inset-0 text-red-500 m-auto " />
+          <Image
+            src="https://assets.aceternity.com/fireship.jpg"
+            alt="header"
+            width={800}
+            height={800}
+            className="h-full w-full aspect-square object-cover object-center rounded-md blur-none group-hover/image:blur-md transition-all duration-200"
+          />
+        </div>
+      </div>
+    </Link>
+    {/* <div className="h-60 md:h-full  flex flex-col items-center relative bg-transparent dark:bg-transparent mt-10"> */}
       {/* <Globe className="absolute -right-10 md:-right-10 -bottom-80 md:-bottom-72" /> */}
       {/* <OrbitingCirclesDemo/> */}
-    </div>
+    {/* </div> */}
+    </>
   );
 };
 
