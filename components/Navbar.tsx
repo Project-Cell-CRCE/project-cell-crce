@@ -1,6 +1,18 @@
 "use client";
-import { Menu, Presentation } from "lucide-react";
-import React, { useState } from "react";
+import {
+  Home,
+  LineChart,
+  Package,
+  Package2,
+  PanelLeft,
+  Presentation,
+  Settings,
+  ShoppingCart,
+  User2,
+  UserCircle2,
+  Users2,
+} from "lucide-react";
+import React, { Children, useEffect, useLayoutEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,12 +27,20 @@ import {
 } from "@/components/ui/navigation-menu";
 import ThemeToggle from "./Themetoggle";
 import { Button } from "./ui/button";
+import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
+import { auth } from "@/lib/firebase";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { onAuthStateChanged, User, signOut } from "firebase/auth";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 
-const Navbar = () => {
-  const [nav, setNav] = useState(false);
-  const handleNav = () => {
-    setNav(!nav);
-  };
+const Navbar = ({children}:{children: React.ReactNode}) => {
   const components: { title: string; href: string; description: string }[] = [
     {
       title: "Event Name",
@@ -76,17 +96,66 @@ const Navbar = () => {
       link: "/projects/pani-puri",
     },
   ];
+
+  const provider = new GoogleAuthProvider();
+  const LogIn = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      if (credential) {
+        const token = credential.accessToken;
+      }
+      const user = result.user;
+      console.log("User:", user);
+    } catch (error: any) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      const email = error.email;
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      console.error(
+        "Error during sign-in:",
+        errorCode,
+        errorMessage,
+        email,
+        credential
+      );
+    }
+  };
+
+  const userSignout = () => {
+    sessionStorage.clear();
+    signOut(auth)
+      .then(() => {
+        sessionStorage.clear();
+      })
+      .catch((e) => console.log(e));
+  };
+
+  const [userAuth, setUserAuth] = useState<User | null>(null);
+  useEffect(() => {
+    const listen = onAuthStateChanged(auth, (user: User | null) => {
+      if (user) {
+        setUserAuth(user);
+      } else {
+        setUserAuth(null);
+      }
+    });
+    return () => {
+      listen();
+    };
+  }, [LogIn, userSignout]);
+
   return (
-    <div className="sticky top-0 z-[45] w-full">
-      <nav className="bg-white dark:bg-black">
-        <div className="md:mx-10 mx-2 flex flex-wrap items-center justify-between p-2">
+    <>
+      <nav className="md:block hidden bg-white dark:bg-black">
+        <div className="z-[30] md:mx-10 mx-2 flex flex-wrap items-center justify-between p-2">
           <a
             href="/"
             className="flex items-center space-x-3 text-white rtl:space-x-reverse"
           >
             <Image
               src="/logo.png"
-              className="rounded-md "
+              className="rounded-md"
               height={25}
               width={25}
               alt="logo"
@@ -100,7 +169,7 @@ const Navbar = () => {
               </span>
             </div>
           </a>
-          <div className="md:block hidden">
+          <div className="z-[30] md:block hidden">
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
@@ -133,24 +202,22 @@ const Navbar = () => {
                           </a>
                         </NavigationMenuLink>
                       </li>
-                      {projects.map((values, i) => {
-                        return (
-                          <ListItem
-                            key={i}
-                            href={values.link}
-                            title={values.title}
-                          >
-                            {values.desc}
-                          </ListItem>
-                        );
-                      })}
+                      {projects.map((values, i) => (
+                        <ListItem
+                          key={i}
+                          href={values.link}
+                          title={values.title}
+                        >
+                          {values.desc}
+                        </ListItem>
+                      ))}
                     </ul>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                   <NavigationMenuTrigger>Our Events</NavigationMenuTrigger>
                   <NavigationMenuContent>
-                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                    <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                       {components.map((component) => (
                         <ListItem
                           key={component.title}
@@ -181,101 +248,207 @@ const Navbar = () => {
                 <div className="block rounded my-auto text-black hover:text-black md:border-0 md:p-0 md:hover:bg-transparent dark:text-white dark:hover:text-gray-400">
                   <ThemeToggle />
                 </div>
-                <div className="md:hidden block rounded my-auto text-black hover:text-black md:border-0 md:p-0 md:hover:bg-transparent dark:text-white dark:hover:text-gray-400">
-                  <Menu onClick={handleNav} />
-                </div>
-                <Button className="md:block hidden">Login</Button>
+                {userAuth ? (
+                  <>
+                    {/* <Button onClick={userSignout} className="md:block hidden">
+                      SignOut
+                    </Button> */}
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <div className="block rounded my-auto text-black hover:text-black md:border-0 md:p-0 md:hover:bg-transparent dark:text-white dark:hover:text-gray-400">
+                          {userAuth.photoURL ? (
+                            <Image
+                              src={userAuth.photoURL}
+                              height={35}
+                              width={35}
+                              className="rounded-full shadow shadow-black dark:shadow-white border-0.5 border-black dark:border-white"
+                              alt={userAuth.displayName!}
+                            />
+                          ) : (
+                            <UserCircle2 />
+                          )}
+                        </div>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuLabel>My Profile</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <Link href={`/profile/${userAuth.uid}`}>
+                          <DropdownMenuItem>
+                            {userAuth.displayName}
+                          </DropdownMenuItem>
+                        </Link>
+                        <Link href={`/profile/${userAuth.uid}`}>
+                          <DropdownMenuItem>{userAuth.email}</DropdownMenuItem>
+                        </Link>
+                        <DropdownMenuItem onClick={userSignout}>
+                          Sign Out
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </>
+                ) : (
+                  <Button onClick={LogIn} className="md:block hidden">
+                    Login
+                  </Button>
+                )}
               </div>
-              {/* <ul className="flex items-center justify-center rounded-lg border-gray-900 bg-white font-medium mt-0 flex-row md:space-x-5 space-x-3 border-0 rtl:space-x-reverse dark:bg-black">
-                <li>
-                  <a
-                    href="/home"
-                    className="block rounded py-2 text-black hover:text-black md:border-0 p-0 md:hover:bg-transparent dark:text-white dark:hover:text-gray-400"
-                  >
-                    <Home />
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/team"
-                    className="block rounded py-2 text-black hover:text-black md:border-0 md:p-0 md:hover:bg-transparent dark:text-white dark:hover:text-gray-400"
-                  >
-                    <Users2 />
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/team"
-                    className="block rounded py-2 text-black hover:text-black md:border-0 md:p-0 md:hover:bg-transparent dark:text-white dark:hover:text-gray-400"
-                  >
-                    <Presentation />
-                  </a>
-                </li>
-                <li>
-                  <div className="block rounded py-2 text-black hover:text-black md:border-0 md:p-0 md:hover:bg-transparent dark:text-white dark:hover:text-gray-400">
-                    <ThemeToggle />
-                  </div>
-                </li>
-              </ul> */}
             </div>
           </div>
         </div>
+        <main className="flex w-full flex-1 flex-col overflow-hidden">{children}</main>
       </nav>
-      {nav ? (
-        // <!-- drawer component -->
-        <div
-          //   id="drawer-navigation"
-          className="fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto transition-transform bg-white w-64 dark:bg-gray-800"
-          style={{ zIndex: "5" }}
-          // tabindex="-1"
-        >
-          <div className="py-4 overflow-y-auto">
-            <ul className="space-y-2 font-medium">
-              <li>
-                <a
-                  href="#home"
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                  onClick={handleNav}
-                >
-                  <span className="ml-3">Home</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/projects"
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                  onClick={handleNav}
-                >
-                  <span className="flex-1 ml-3 whitespace-nowrap">
-                    Projects
-                  </span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/events"
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                  onClick={handleNav}
-                >
-                  <span className="flex-1 ml-3 whitespace-nowrap">Events</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#our-team"
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                  onClick={handleNav}
-                >
-                  <span className="flex-1 ml-3 whitespace-nowrap">Team</span>
-                </a>
-              </li>
-            </ul>
-          </div>
+
+      <div className="md:hidden flex min-h-screen w-full flex-col bg-muted/40">
+        <div className="flex flex-col sm:gap-4 sm:py-4 sm:pl-14">
+          <header className="md:hidden sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto w-full sm:border-0 sm:bg-transparent sm:px-6">
+            <Sheet>
+              <div className="flex justify-between w-full">
+                <div className="flex gap-2">
+                  <SheetTrigger asChild>
+                    <Button size="icon" variant="outline" className="sm:hidden">
+                      <PanelLeft className="h-5 w-5" />
+                      <span className="sr-only">Toggle Menu</span>
+                    </Button>
+                  </SheetTrigger>
+                  <a
+                    href="/"
+                    className="flex items-center space-x-3 text-white rtl:space-x-reverse"
+                  >
+                    <Image
+                      src="/logo.png"
+                      className="rounded-md"
+                      height={25}
+                      width={25}
+                      alt="logo"
+                    />
+                    <div className="py-auto">
+                      <span
+                        className="text-[22px] text-black md:text-[24px] dark:text-white"
+                        style={{ lineHeight: "32px", fontWeight: "600" }}
+                      >
+                        Project Cell CRCE
+                      </span>
+                    </div>
+                  </a>
+                </div>
+                <div className="rounded my-auto text-black hover:text-black md:border-0 md:p-0 md:hover:bg-transparent dark:text-white dark:hover:text-gray-400">
+                  <ThemeToggle />
+                </div>
+              </div>
+              <SheetContent side="left" className="sm:max-w-xs">
+                <nav className="grid gap-6 text-lg font-medium">
+                  <Link
+                    href="#"
+                    className="group flex h-10 w-10 shrink-0 items-center justify-center gap-2 rounded-full bg-primary text-lg font-semibold text-primary-foreground md:text-base"
+                    prefetch={false}
+                  >
+                    <Package2 className="h-5 w-5 transition-all group-hover:scale-110" />
+                    <span className="sr-only">Acme Inc</span>
+                  </Link>
+                  <Link
+                    href="#"
+                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                    prefetch={false}
+                  >
+                    <Home className="h-5 w-5" />
+                    Dashboard
+                  </Link>
+                  <Link
+                    href="#"
+                    className="flex items-center gap-4 px-2.5 text-foreground"
+                    prefetch={false}
+                  >
+                    <ShoppingCart className="h-5 w-5" />
+                    Orders
+                  </Link>
+                  <Link
+                    href="#"
+                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                    prefetch={false}
+                  >
+                    <Package className="h-5 w-5" />
+                    Products
+                  </Link>
+                  <Link
+                    href="#"
+                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                    prefetch={false}
+                  >
+                    <Users2 className="h-5 w-5" />
+                    Customers
+                  </Link>
+                  <Link
+                    href="#"
+                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                    prefetch={false}
+                  >
+                    <LineChart className="h-5 w-5" />
+                    Reports
+                  </Link>
+                  <Link
+                    href="#"
+                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                    prefetch={false}
+                  >
+                    <Settings className="h-5 w-5" />
+                    Settings
+                  </Link>
+                  {userAuth ? (
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <div className="block rounded my-auto text-black hover:text-black md:border-0 md:p-0 md:hover:bg-transparent dark:text-white dark:hover:text-gray-400">
+                          {userAuth.photoURL ? (
+                            <div className="border-t border-black/60 dark:border-white/60 pt-5 flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground">
+                              <Image
+                                src={userAuth.photoURL}
+                                height={35}
+                                width={35}
+                                className="rounded-full shadow shadow-black dark:shadow-white border-0.5 border-black dark:border-white"
+                                alt={userAuth.displayName!}
+                              />
+                              {userAuth.displayName}
+                            </div>
+                          ) : (
+                            <div className="border-t border-black/60 dark:border-white/60 pt-5 flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground">
+                              <UserCircle2 />
+                              <p>My Profile</p>
+                            </div>
+                          )}
+                        </div>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuLabel>My Profile</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <Link href={`/profile/${userAuth.uid}`}>
+                          <DropdownMenuItem>
+                            {userAuth.displayName}
+                          </DropdownMenuItem>
+                        </Link>
+                        <Link href={`/profile/${userAuth.uid}`}>
+                          <DropdownMenuItem>{userAuth.email}</DropdownMenuItem>
+                        </Link>
+                        <DropdownMenuItem onClick={userSignout}>
+                          Sign Out
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  ) : (
+                    <button
+                      onClick={LogIn}
+                      className="border-t border-black/60 dark:border-white/60 pt-5 flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                    >
+                      <User2 className="h-5 w-5" />
+                      Login
+                    </button>
+                  )}
+                </nav>
+              </SheetContent>
+            </Sheet>
+          </header>
         </div>
-      ) : (
-        ""
-      )}
-    </div>
+        <main className="flex w-full flex-1 flex-col overflow-hidden">{children}</main>
+      </div>
+    </>
   );
 };
 
