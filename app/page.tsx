@@ -1,8 +1,5 @@
-import Banner from "@/components/Banner";
-import HomePage from "@/components/HomePage";
-import Navbar from "@/components/Navbar";
-import { FeaturesSectionDemo } from "@/components/ui/FeaturesSectionDemo";
-import Image from "next/image";
+import HomePage from "@/components/Home/HomePage";
+import { FeaturesSectionDemo } from "@/components/Home/FeaturesSectionDemo";
 
 export default function Home() {
   return (

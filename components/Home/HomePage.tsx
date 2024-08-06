@@ -1,16 +1,15 @@
 import React from "react";
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "./ui/card";
-import { Button } from "./ui/button";
+} from "../ui/card";
+import { Button } from "../ui/button";
 import Image from "next/image";
 import { ChevronRight, Github, Globe, Instagram, Linkedin } from "lucide-react";
-import { CardsCarouselDemo } from "./ui/CardsCarouselDemo";
+import { CardsCarouselDemo } from "./CardsCarouselDemo";
 
 const HomePage = () => {
   const team = [

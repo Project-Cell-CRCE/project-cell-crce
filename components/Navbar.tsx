@@ -1,9 +1,11 @@
 "use client";
 import {
+  CalendarFold,
   Home,
   LineChart,
   Package,
   Package2,
+  PackageOpen,
   PanelLeft,
   Presentation,
   Settings,
@@ -346,52 +348,36 @@ const Navbar = ({children}:{children: React.ReactNode}) => {
                     <span className="sr-only">Acme Inc</span>
                   </Link>
                   <Link
-                    href="#"
+                    href="/"
                     className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                     prefetch={false}
                   >
                     <Home className="h-5 w-5" />
-                    Dashboard
+                    Home
                   </Link>
                   <Link
-                    href="#"
-                    className="flex items-center gap-4 px-2.5 text-foreground"
-                    prefetch={false}
-                  >
-                    <ShoppingCart className="h-5 w-5" />
-                    Orders
-                  </Link>
-                  <Link
-                    href="#"
+                    href="/projects"
                     className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                     prefetch={false}
                   >
-                    <Package className="h-5 w-5" />
-                    Products
+                    <PackageOpen className="h-5 w-5" />
+                    Projects
                   </Link>
                   <Link
-                    href="#"
+                    href="/events"
+                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                    prefetch={false}
+                  >
+                    <CalendarFold className="h-5 w-5" />
+                    Events
+                  </Link>
+                  <Link
+                    href="/#our-team"
                     className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                     prefetch={false}
                   >
                     <Users2 className="h-5 w-5" />
-                    Customers
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                    prefetch={false}
-                  >
-                    <LineChart className="h-5 w-5" />
-                    Reports
-                  </Link>
-                  <Link
-                    href="#"
-                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                    prefetch={false}
-                  >
-                    <Settings className="h-5 w-5" />
-                    Settings
+                    Team
                   </Link>
                   {userAuth ? (
                     <DropdownMenu>
