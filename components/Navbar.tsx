@@ -30,7 +30,7 @@ import {
 import ThemeToggle from "./Themetoggle";
 import { Button } from "./ui/button";
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
-import { auth } from "@/lib/firebase";
+import { auth, db } from "@/lib/firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { onAuthStateChanged, User, signOut } from "firebase/auth";
 import {
@@ -41,8 +41,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 
-const Navbar = ({children}:{children: React.ReactNode}) => {
+const Navbar = ({ children }: { children: React.ReactNode }) => {
   const components: { title: string; href: string; description: string }[] = [
     {
       title: "Event Name",
@@ -106,6 +107,20 @@ const Navbar = ({children}:{children: React.ReactNode}) => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       if (credential) {
         const token = credential.accessToken;
+        const newRef = doc(db, "users", result.user.uid);
+        const userSnapshot = await getDoc(newRef);
+        if (userSnapshot.exists()) {
+          console.log(userSnapshot.data());
+        } else {
+          const userRef = doc(db, "users", result.user.uid);
+          await setDoc(userRef, {
+            avatarUrl: result.user.photoURL,
+            name: result.user.displayName,
+            email: result.user.email,
+            phone: result.user.phoneNumber,
+            score: 0,
+          });
+        }
       }
       const user = result.user;
       console.log("User:", user);
@@ -297,7 +312,9 @@ const Navbar = ({children}:{children: React.ReactNode}) => {
             </div>
           </div>
         </div>
-        <main className="flex w-full flex-1 flex-col overflow-hidden">{children}</main>
+        <main className="flex w-full flex-1 flex-col overflow-hidden">
+          {children}
+        </main>
       </nav>
 
       <div className="md:hidden flex min-h-screen w-full flex-col bg-muted/40">
@@ -432,7 +449,9 @@ const Navbar = ({children}:{children: React.ReactNode}) => {
             </Sheet>
           </header>
         </div>
-        <main className="flex w-full flex-1 flex-col overflow-hidden">{children}</main>
+        <main className="flex w-full flex-1 flex-col overflow-hidden">
+          {children}
+        </main>
       </div>
     </>
   );
