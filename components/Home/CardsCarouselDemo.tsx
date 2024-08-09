@@ -47,13 +47,70 @@ const DummyContent = () => {
   );
 };
 
+const SolderingWorkshop = () => {
+  return (
+    <>
+      {[...new Array(1).fill(1)].map((_, index) => {
+        return (
+          <div
+            key={"dummy-content" + index}
+            className="bg-[#F5F5F7] dark:bg-neutral-800 p-8 md:p-14 rounded-3xl mb-4"
+          >
+            <p className="text-neutral-600 dark:text-neutral-400 text-base md:text-2xl font-sans max-w-3xl mx-auto">
+              <span className="font-bold text-neutral-700 dark:text-neutral-200">
+              </span>{" "}
+              As part of project based learning program students from First Year were introduced to Soldering Concepts with hands on practice by making different circuits.
+              Around 220 Students from All the branches participated in the workshop.
+              The Workshop was held for an entire week.
+
+            </p>
+            <Image
+              src="/soldering_workshop/Capture.PNG"
+              alt="Macbook mockup from Aceternity UI"
+              height="500"
+              width="500"
+              className="md:w-1/2 md:h-1/2 h-full w-full mx-auto object-contain"
+            />
+          </div>
+        );
+      })}
+    </>
+  );
+};
+
+const HardwareHackathon = () => {
+  return (
+    <>
+      {[...new Array(1).fill(1)].map((_, index) => {
+        return (
+          <div
+            key={"dummy-content" + index}
+            className="bg-[#F5F5F7] dark:bg-neutral-800 p-8 md:p-14 rounded-3xl mb-4"
+          >
+            <p className="text-neutral-600 dark:text-neutral-400 text-base md:text-2xl font-sans max-w-3xl mx-auto">
+              <span className="font-bold text-neutral-700 dark:text-neutral-200">
+              </span>{" "}
+              All the students interested in Participating for the <b>eYantra Ideas Competition</b> 
+              had to participate in the hardware hackathon in order to prequalify for the competition. 
+              The Problem Statement was <b>Manual Mining</b> and <b>Automatic Excavation bot</b>.
+
+            </p>
+            <Image
+              src="https://assets.aceternity.com/macbook.png"
+              alt="Macbook mockup from Aceternity UI"
+              height="500"
+              width="500"
+              className="md:w-1/2 md:h-1/2 h-full w-full mx-auto object-contain"
+            />
+          </div>
+        );
+      })}
+    </>
+  );
+};
+
+
 const data = [
-  {
-    category: "Event Name",
-    title: "Desc.",
-    src: "https://images.unsplash.com/photo-1593508512255-86ab42a8e620?q=80&w=3556&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    content: <DummyContent />,
-  },
   {
     category: "Drone Workshop",
     title: "Enhance your flying skills.",
@@ -66,23 +123,16 @@ const data = [
     src: "https://images.unsplash.com/photo-1713869791518-a770879e60dc?q=80&w=2333&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     content: <DummyContent />,
   },
-
   {
-    category: "Product",
-    title: "Maps for your iPhone 15 Pro Max.",
-    src: "https://images.unsplash.com/photo-1599202860130-f600f4948364?q=80&w=2515&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    content: <DummyContent />,
-  },
-  {
-    category: "iOS",
-    title: "Photography just got better.",
-    src: "https://images.unsplash.com/photo-1602081957921-9137a5d6eaee?q=80&w=2793&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    content: <DummyContent />,
+    category: "2019",
+    title: "Soldering Workshop for FE Students",
+    src: "/solder.jpg",
+    content: <SolderingWorkshop />,
   },
   {
     category: "2019",
     title: "Hardware Hackathon",
     src: "/IoT-hardware-hackathon.png",
-    content: <DummyContent />,
+    content: <HardwareHackathon />,
   },
 ];
